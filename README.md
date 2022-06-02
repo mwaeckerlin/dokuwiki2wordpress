@@ -17,7 +17,8 @@ Usage
 -----
 
  - install package `php-cli`
- - copy `dokucli.php` to your dokuwiki's `bin` path
- 
-
+   (e.g. sudo apt install php7.2-cli)
+ - go to your dokuwiki root directory
+ - run [dokuwiki2wordpress path]/dokuwiki2wordpress.sh to create .xml file
+ - In Wordpress -> menu -> tools -> import -> wordpress -> (install now) -> run importer -> select .xml file
 ...

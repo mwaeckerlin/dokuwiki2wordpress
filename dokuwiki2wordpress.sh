@@ -143,13 +143,14 @@ cat<<EOF
     <channel>
         <wp:wxr_version>1.2</wp:wxr_version>
 EOF
-for file in ${*:-$(find data/pages/)}; do
+for file in ${*:-$(find data/pages/ -type f)}; do
     path=${file#data/pages}
     filename=${file##*/}
     categories=${path%${filename}}
     categories=${tags%/}
     title="$(sed -n '/^ *=\+ *\([^ ].*[^ =]\) *=\+ *$/{s//\1/p;q}' ${file})"
     title=${title:-${filename%.txt}}
+    date="$(date --date=@$(stat -c "%Y" $file) +"%Y-%m-%d %H:%M:%S")"
     cat <<EOF
         <item>
             <title>$title</title>
@@ -159,9 +160,9 @@ for file in ${*:-$(find data/pages/)}; do
 $(php $PATH_TO_DOKUWIKI/bin/dokucli.php < $file)
 ]]></content:encoded>
             <excerpt:encoded><![CDATA[]]></excerpt:encoded>
-            <wp:post_date>2015-03-03 16:20:00</wp:post_date>
+            <wp:post_date>${date}</wp:post_date>
             <wp:status>publish</wp:status>
-            <wp:post_type>post</wp:post_type>
+            <wp:post_type>page</wp:post_type>
         </item>
 EOF
 done
